@@ -77,4 +77,10 @@ This project uses CMake as its build system. Follow these steps to build the pro
     ```
 ## Dependencies
 
-This project is written in C++ and requires a C++ compiler to build and run. The project also uses the Google Test framework for testing.
+This project is written in C++ and requires a C++ compiler to build and run. The project also uses the following libraries:
+
+- [Eigen](http://eigen.tuxfamily.org/index.php?title=Main_Page): A high-level C++ library of template headers for linear algebra, matrix and vector operations, numerical solvers and related algorithms.
+
+- [Google Test](https://github.com/google/googletest): A unit testing library for the C++ programming language, based on the xUnit architecture.
+
+Please ensure that these libraries are installed on your system before building and running the project.

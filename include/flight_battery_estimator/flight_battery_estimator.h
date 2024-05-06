@@ -62,7 +62,7 @@ public:
                                      double constant_speed_power_consumption) const;
 
 private:
-    double max_wind_association_distance_ = 100.0; //meters
+    double max_wind_association_distance_ = 500.0; //meters
     WindDataAssociationFunction wind_data_association_function_;
 };
 

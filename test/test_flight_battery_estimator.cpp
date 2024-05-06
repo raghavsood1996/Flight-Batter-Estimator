@@ -40,7 +40,7 @@ TEST(FlightBatteryEstimatorTest, TestEstimatedBatteryRemainingEmptyWaypoints) {
 
     constexpr double mission_airspeed = 30.0;
     constexpr double battery_initial_charge = 100.0;
-    constexpr double constant_speed_power_consumption = 1.0;
+    constexpr double constant_speed_power_consumption = 500.0;
 
     const double battery_remaining = flight_battery_estimator.estimatedBatteryRemaining(waypoints,
                                                                                     wind_speeds,
@@ -62,9 +62,9 @@ TEST(FlightBatteryEstimatorTest, TestEstimatedBatteryRemaining1Waypoint)
     addWindData(wind_speeds, 0, 0, -1000, 0);
 
     // Set up other parameters
-    constexpr double mission_airspeed = 30.0;
-    constexpr double battery_initial_charge = 100.0;
-    constexpr double constant_speed_power_consumption = 1.0;
+    constexpr double mission_airspeed = 30.0; //m/s
+    constexpr double battery_initial_charge = 100.0; //watt hours
+    constexpr double constant_speed_power_consumption = 500.0; //Watt
 
     // Call the estimatedBatteryRemaining function
     const double battery_remaining = flight_battery_estimator.estimatedBatteryRemaining(waypoints,
@@ -84,13 +84,13 @@ TEST(FlightBatteryEstimatorTest, TestEstimatedBatteryRemainingNoWindData) {
     std::vector<FlightWaypoint> waypoints;
     const std::vector<std::shared_ptr<WindData>> wind_speeds;
 
-    addWaypoint(waypoints, 0, 10);
-    addWaypoint(waypoints, 0, 20);
+    addWaypoint(waypoints, 1000, 1000);
+    addWaypoint(waypoints, 5000, 5000);
 
     // Set up other parameters
     constexpr double mission_airspeed = 30.0;
     constexpr double battery_initial_charge = 100.0;
-    constexpr double constant_speed_power_consumption = 1.0;
+    constexpr double constant_speed_power_consumption = 500.0;
 
     // Call the estimatedBatteryRemaining function
     const double battery_remaining = flight_battery_estimator.estimatedBatteryRemaining(waypoints,
@@ -100,7 +100,7 @@ TEST(FlightBatteryEstimatorTest, TestEstimatedBatteryRemainingNoWindData) {
                                                                                     constant_speed_power_consumption);
 
     // Check that the battery remaining is the same as the initial charge
-    EXPECT_NEAR(battery_remaining, 99.666, 1e-3);
+    EXPECT_NEAR(battery_remaining, 73.810, 1e-3);
 }
 
 TEST(FlightBatteryEstimatorTest, TestEstimatedBatteryRemainingCase1) {
@@ -110,22 +110,22 @@ TEST(FlightBatteryEstimatorTest, TestEstimatedBatteryRemainingCase1) {
     std::vector<std::shared_ptr<WindData>> wind_speeds;
 
 
-    addWaypoint(waypoints, 0, 10);
-    addWaypoint(waypoints, 0, 20);
+    addWaypoint(waypoints, 0, 1000);
+    addWaypoint(waypoints, 0, 2000);
 
     addWindData(wind_speeds, 0, 0, 0, 0);
 
 
     constexpr double mission_airspeed = 30.0;
     constexpr double battery_initial_charge = 100.0;
-    constexpr double constant_speed_power_consumption = 1.0;
+    constexpr double constant_speed_power_consumption = 500.0;
 
     const double battery_remaining = flight_battery_estimator.estimatedBatteryRemaining(waypoints,
                                                                                     wind_speeds,
                                                                                     mission_airspeed,
                                                                                     battery_initial_charge,
                                                                                     constant_speed_power_consumption);
-    EXPECT_NEAR(battery_remaining, 99.666, 1e-3);
+    EXPECT_NEAR(battery_remaining, 95.3704, 1e-3);
 }
 
 //create another test case
@@ -136,17 +136,17 @@ TEST(FlightBatteryEstimatorTest, TestEstimatedBatteryRemainingCase2) {
     std::vector<FlightWaypoint> waypoints;
     std::vector<std::shared_ptr<WindData>> wind_speeds;
 
+    addWaypoint(waypoints,0,0);
+    addWaypoint(waypoints, 1000, 1000);
+    addWaypoint(waypoints, 2000, 2000);
 
-    addWaypoint(waypoints, 0, 10);
-    addWaypoint(waypoints, 0, 20);
-
-    addWindData(wind_speeds, 0, 0, 5, 0);
-    addWindData(wind_speeds, 0, 20, -5, 0);
+    addWindData(wind_speeds, 250, 250, 10, 10);
+    addWindData(wind_speeds, 1800, 1800, -5, -5);
 
     // Set up other parameters
     constexpr double mission_airspeed = 30.0;
     constexpr double battery_initial_charge = 100.0;
-    constexpr double constant_speed_power_consumption = 1.0;
+    constexpr double constant_speed_power_consumption = 500.0;
 
     // Call the estimatedBatteryRemaining function
     const double battery_remaining = flight_battery_estimator.estimatedBatteryRemaining(waypoints,
@@ -156,7 +156,7 @@ TEST(FlightBatteryEstimatorTest, TestEstimatedBatteryRemainingCase2) {
                                                                                     constant_speed_power_consumption);
 
 
-    EXPECT_NEAR(battery_remaining, 99.666, 1e-3);
+    EXPECT_NEAR(battery_remaining, 87.279, 1e-3);
 }
 
 
@@ -167,18 +167,18 @@ TEST(FlightBatteryEstimatorTest, TestEstimatedBatteryRemainingCase3) {
     std::vector<FlightWaypoint> waypoints;
     std::vector<std::shared_ptr<WindData>> wind_speeds;
 
-    addWaypoint(waypoints, 0, 10);
-    addWaypoint(waypoints, 0, 20);
-    addWaypoint(waypoints, 0, 30);
-    addWaypoint(waypoints, 0, 40);
+    addWaypoint(waypoints, 0, 1000);
+    addWaypoint(waypoints, 0, 2000);
+    addWaypoint(waypoints, 1500, 2000);
+    addWaypoint(waypoints, 1500, 3000);
 
-    addWindData(wind_speeds, 0, 0, 5, 0);
-    addWindData(wind_speeds, 10, 20, 0, 5);
+    addWindData(wind_speeds, 0, 1000, 5, 0);
+    addWindData(wind_speeds, 1600, 1900, 0, 5);
 
     // Set up other parameters
     constexpr double mission_airspeed = 30.0;
     constexpr double battery_initial_charge = 100.0;
-    constexpr double constant_speed_power_consumption = 1.0;
+    constexpr double constant_speed_power_consumption = 500.0;
 
     // Call the estimatedBatteryRemaining function
     const double battery_remaining = flight_battery_estimator.estimatedBatteryRemaining(waypoints,
@@ -188,6 +188,6 @@ TEST(FlightBatteryEstimatorTest, TestEstimatedBatteryRemainingCase3) {
                                                                                     constant_speed_power_consumption);
 
 
-    EXPECT_NEAR(battery_remaining, 99.130, 1e-3);
+    EXPECT_NEAR(battery_remaining, 84.192, 1e-3);
 }
 
