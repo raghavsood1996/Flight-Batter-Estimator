@@ -14,13 +14,16 @@
 
 namespace
 {
-    void addWaypoint(std::vector<FlightWaypoint>& waypoints, double x, double y) {
+    void addWaypoint(std::vector<FlightWaypoint>& waypoints, double x, double y)
+    {
         FlightWaypoint waypoint;
         waypoint.position = Eigen::Vector2d(x, y);
         waypoints.push_back(waypoint);
     }
 
-    void addWindData(std::vector<std::shared_ptr<WindData>>& wind_speeds, double x, double y, double wind_x, double wind_y) {
+    void addWindData(std::vector<std::shared_ptr<WindData>>& wind_speeds, double x, double y, double wind_x,
+                     double wind_y)
+    {
         WindData wind_speed;
         wind_speed.position = Eigen::Vector2d(x, y);
         wind_speed.wind_speed = Eigen::Vector2d(wind_x, wind_y);
@@ -29,7 +32,8 @@ namespace
 }
 
 
-TEST(WaypointWindAssociationFunctionsTest, TestAssociateWindVectorsWithWaypointsUsingClosestWindVector) {
+TEST(WaypointWindAssociationFunctionsTest, TestAssociateWindVectorsWithWaypointsUsingClosestWindVector)
+{
     // Create some waypoints and wind data
     std::vector<FlightWaypoint> waypoints;
     std::vector<std::shared_ptr<WindData>> wind_speeds;
@@ -48,7 +52,8 @@ TEST(WaypointWindAssociationFunctionsTest, TestAssociateWindVectorsWithWaypoints
     ASSERT_EQ(waypoints[1].associated_wind, wind_speeds[1]);
 }
 
-TEST(WaypointWindAssociationFunctionsTest, TestAssociateWindVectorsWithWaypointsUsingClosestWindVectorNoAssociation) {
+TEST(WaypointWindAssociationFunctionsTest, TestAssociateWindVectorsWithWaypointsUsingClosestWindVectorNoAssociation)
+{
     // Create some waypoints and wind data
     std::vector<FlightWaypoint> waypoints;
     std::vector<std::shared_ptr<WindData>> wind_speeds;
@@ -67,7 +72,8 @@ TEST(WaypointWindAssociationFunctionsTest, TestAssociateWindVectorsWithWaypoints
     ASSERT_EQ(waypoints[1].associated_wind->wind_speed, Eigen::Vector2d(0, 0));
 }
 
-TEST(WaypointWindAssociationFunctionsTest, TestNoWaypointsOrWindData) {
+TEST(WaypointWindAssociationFunctionsTest, TestNoWaypointsOrWindData)
+{
     std::vector<FlightWaypoint> waypoints;
     std::vector<std::shared_ptr<WindData>> wind_speeds;
 
@@ -77,7 +83,8 @@ TEST(WaypointWindAssociationFunctionsTest, TestNoWaypointsOrWindData) {
     ASSERT_TRUE(wind_speeds.empty());
 }
 
-TEST(WaypointWindAssociationFunctionsTest, TestWaypointsButNoWindData) {
+TEST(WaypointWindAssociationFunctionsTest, TestWaypointsButNoWindData)
+{
     std::vector<FlightWaypoint> waypoints;
     std::vector<std::shared_ptr<WindData>> wind_speeds;
 
@@ -88,7 +95,8 @@ TEST(WaypointWindAssociationFunctionsTest, TestWaypointsButNoWindData) {
     ASSERT_EQ(waypoints[0].associated_wind->wind_speed, Eigen::Vector2d(0, 0));
 }
 
-TEST(WaypointWindAssociationFunctionsTest, TestWindDataButNoWaypoints) {
+TEST(WaypointWindAssociationFunctionsTest, TestWindDataButNoWaypoints)
+{
     std::vector<FlightWaypoint> waypoints;
     std::vector<std::shared_ptr<WindData>> wind_speeds;
 
@@ -99,7 +107,8 @@ TEST(WaypointWindAssociationFunctionsTest, TestWindDataButNoWaypoints) {
     ASSERT_TRUE(waypoints.empty());
 }
 
-TEST(WaypointWindAssociationFunctionsTest, TestSamePosition) {
+TEST(WaypointWindAssociationFunctionsTest, TestSamePosition)
+{
     std::vector<FlightWaypoint> waypoints;
     std::vector<std::shared_ptr<WindData>> wind_speeds;
 
@@ -111,7 +120,8 @@ TEST(WaypointWindAssociationFunctionsTest, TestSamePosition) {
     ASSERT_EQ(waypoints[0].associated_wind, wind_speeds[0]);
 }
 
-TEST(WaypointWindAssociationFunctionsTest, TestZeroWindSpeed) {
+TEST(WaypointWindAssociationFunctionsTest, TestZeroWindSpeed)
+{
     std::vector<FlightWaypoint> waypoints;
     std::vector<std::shared_ptr<WindData>> wind_speeds;
 
