@@ -32,12 +32,6 @@ double FlightBatteryEstimator::estimatedBatteryRemaining(std::vector<FlightWaypo
     }
 
     wind_data_association_function_(waypoints, wind_speeds, max_wind_association_distance_);
-    //print out the waypoints and their associated wind vectors
-    for (int i = 0; i < waypoints.size(); i++)
-    {
-        std::cout << "Waypoint " << i << " position: " << waypoints[i].position.transpose() << " associated wind: " <<
-            waypoints[i].associated_wind->wind_speed.transpose() << "\n";
-    }
 
     //loop through waypoints and calculate the distance between them and the power consumed while average the wind speed between the waypoints
     for (int i = 0; i < waypoints.size() - 1; i++)
@@ -58,7 +52,6 @@ double FlightBatteryEstimator::estimatedBatteryRemaining(std::vector<FlightWaypo
         const double time = distance / ground_speed;
         const double power_consumed = time * constant_speed_power_consumption / 3600.0; //convert to watt hours
         battery_remaining -= power_consumed;
-        std::cout << "Battery remaining: " << battery_remaining << "\n";
     }
 
     return battery_remaining;
